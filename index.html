@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Axios example</title>
+    <meta charset="UTF-8">
+
+    <!-- We need to import Axios in order to be able to use the axios object below -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <div class="form">
+        <form class="" action="index.html" method="post">
+            <label for="Rows">Rows:</label>
+            <input type="text" id="rows">
+            <label for="Columns">Columns:</label>
+            <input type="text" id="columns">
+            <label for="Bombs">Bombs:</label>
+            <input type="text" id="bombs">
+            <button type="button" onclick="fetchData()">Create Table</button>
+        </form>
+    </div>
+    <div class="game">
+        <table class="grid">        
+        </table>
+    </div>
+
+    <script src="script.js" type="text/javascript"></script>
+</body>
+
+</html>
