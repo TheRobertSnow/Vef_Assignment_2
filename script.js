@@ -10,10 +10,14 @@ function generateGrid(data) {
             cell.onclick = function() {cellClicked(this);}
             var mine = document.createAttribute("is-mine");
             mine.value = "false";
+            for (var k=0; k<data.board.minePositions.length; k++) {
+                if (i == data.board.minePositions[k][0] && j == data.board.minePositions[k][1]) {
+                    mine.value = "true"
+                }
+            }
             cell.setAttributeNode(mine);
         }
     }
-    setMines();
 }
 
 function fetchData() {
@@ -42,10 +46,6 @@ function fetchData() {
         });
 }
 
-function setMines() {
-
-}
-
-function cellClicked() {
-    
-}
+// function cellClicked() {
+//
+// }
