@@ -8,15 +8,15 @@ function generateGrid(data) {
             cell = row.insertCell(j);
             cell.id = i + "" + j
             var mine = document.createAttribute("isMine");
-            mine.value = "False";
+            mine.value = "false";
             for (var k=0; k<data.board.minePositions.length; k++) {
                 if (i == data.board.minePositions[k][0] && j == data.board.minePositions[k][1]) {
-                    mine.value = "True"
-                    setMines(i + "" + j);
+                    mine.value = "true"
+                    // showMines(i + "" + j); Setur myndir af sprengjum
                 }
             }
             cell.setAttributeNode(mine);
-            cell.onmousedown = function() {cellClicked(i + "" + j, cell);}
+            cell.onmousedown = function(event) {cellClicked(i + "" + j, cell);}
         }
     }
 }
@@ -47,7 +47,7 @@ function fetchData() {
         });
 }
 
-function setMines(pos) {
+function showMines(pos) {
     var img = document.createElement("img");
     img.src = "images/bomb.png";
     img.width = "20";
@@ -58,19 +58,19 @@ function setMines(pos) {
 }
 function cellClicked(pos, cell) {
     console.log(event)
-    ev.preventDefault();
-    if (e.which == 3) { // þetta a að vera rightclick
+    event.preventDefault();
+    if (event.which === 3) { // þetta a að vera rightclick
         var img = document.createElement("img");
         img.src = "images/flag.png";
         img.width = "20";
         document.getElementById(pos).appendChild(img);
         // bætir við mynd af flaggi i reitinn
     }
-    else if (e.which == 1) { // leftclick
-        if (cell.getAttributeNode("isMine").value != "False") {
-            console.log("BOMB")
+    else if (event.which === 1) { // leftclick
+        if (cell.getAttributeNode("isMine").value == "true") {
+            showMines()
         }
-        else{
+        else if (cell.getAttributeNode("isMine").value == "false"){
             console.log("NOT BOMB")
         }
     }
