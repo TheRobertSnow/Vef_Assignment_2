@@ -1,0 +1,10 @@
+#grid{
+	margin: auto;
+}
+td{
+	padding: 0;
+	width: 30px;
+	height: 30px;
+	border: 2px solid black;
+	box-sizing: border-box;
+}
