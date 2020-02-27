@@ -7,6 +7,9 @@ function generateGrid(data) {
         row = grid.insertRow(i);
         for (var j=0; j<data.board.cols; j++) {
             cell = row.insertCell(j);
+            for(var pos=0; pos<data.mines; pos++) {
+
+            }
         }
     }
 }
