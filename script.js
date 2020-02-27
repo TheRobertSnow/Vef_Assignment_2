@@ -7,11 +7,13 @@ function generateGrid(data) {
         row = grid.insertRow(i);
         for (var j=0; j<data.board.cols; j++) {
             cell = row.insertCell(j);
-            for(var pos=0; pos<data.mines; pos++) {
-
-            }
+            cell.onclick = function() {cellClicked(this);}
+            var mine = document.createAttribute("is-mine");
+            mine.value = "false";
+            cell.setAttributeNode(mine);
         }
     }
+    setMines();
 }
 
 function fetchData() {
@@ -38,4 +40,12 @@ function fetchData() {
         .then(function () {
             // This code is always executed, independent of whether the request succeeds or fails.
         });
+}
+
+function setMines() {
+
+}
+
+function cellClicked() {
+    
 }
