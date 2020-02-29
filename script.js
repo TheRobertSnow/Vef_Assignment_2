@@ -1,4 +1,5 @@
 var grid = document.getElementById("grid");
+var data = {}
 
 function generateGrid(data) {
     grid.innerHTML="";
@@ -6,12 +7,16 @@ function generateGrid(data) {
         row = grid.insertRow(i);
         for (var j=0; j<data.board.cols; j++) {
             cell = row.insertCell(j);
-            cell.id = i + "" + j
+            var string = i + "" + j;
+            cell.setAttribute("id", string);
+            var cla = document.createAttribute("class");
+            cla.value = "";
+            cell.setAttributeNode(cla)
             var mine = document.createAttribute("isMine");
             mine.value = "false";
             for (var k=0; k<data.board.minePositions.length; k++) {
                 if (i == data.board.minePositions[k][0] && j == data.board.minePositions[k][1]) {
-                    mine.value = "true"
+                    mine.value = "true";
                     // showMines(i + "" + j); Setur myndir af sprengjum
                 }
             }
@@ -34,7 +39,7 @@ function fetchData() {
     axios.post(url, {rows: row, cols: column, mines: mine} )
         .then(function (response) {
             //When successful, print 'Success: ' and the received data
-            var data = response.data;
+            data = response.data;
             console.log("Success: ", data);
             generateGrid(data)
         })
@@ -47,15 +52,33 @@ function fetchData() {
         });
 }
 
-function showMines(pos) {
-    var img = document.createElement("img");
-    img.src = "images/bomb.png";
-    img.width = "20";
-    document.getElementById(pos).appendChild(img);
+// function showMines() {
+//     var img = document.createElement("img");
+//     img.src = "images/bomb.png";
+//     img.width = "20";
+//     for (var i=0; i<data.rows; i++) {
+//         for(var j=0; j<data.cols; j++) {
+//             for (var k=0; k<data.board.minePositions.length; k++) {
+//                 if (i == data.board.minePositions[k][0] && j == data.board.minePositions[k][1]) {
+//                   document.getElementById(i + "" + j).appendChild(img);
+//                 }
+//             }
+//         }
+//     }
+
+function revealMines() {
+    //Highlight all mines in red
+    for (var i=0; i<data.rows; i++) {
+      for(var j=0; j<data.cols; j++) {
+        var cell = grid.rows[i].cells[j];
+        if (cell.getAttribute("data-mine")=="true") cell.className="mine";
+      }
+    }
+}
+
     //bætir mynd af bombu i alla reiti með bombu
     //, sniðugt að nota þetta ef maður ytir a bombu, þvi þa eiga allar bombur að sjast
     //, var bara með þetta til að sja hvor bombur eru
-}
 function cellClicked(pos, cell) {
     console.log(event)
     event.preventDefault();
@@ -68,10 +91,14 @@ function cellClicked(pos, cell) {
     }
     else if (event.which === 1) { // leftclick
         if (cell.getAttributeNode("isMine").value == "true") {
-            showMines()
+            console.log("Bomb");
+            revealMines();
         }
         else if (cell.getAttributeNode("isMine").value == "false"){
-            console.log("NOT BOMB")
+            console.log("NOT BOMB");
+            var cla = document.createAttribute("class");
+            cla.value = "td-clicked";
+            cell.setAttributeNode(cla);
         }
     }
 }
