@@ -82,13 +82,21 @@ function checkCell(e) {
 function flagCell(e) {
 	e.preventDefault();
 	if (gameOver == false) {
+
 		var checked = e.target.getAttribute("checked");
 		var flagged = e.target.getAttribute("flagged");
+		var parent = e.target.parentElement;
+		console.log(e.target);
+
+		if (e.target == parent) {
+			console.log(parent);
+		}
 
 		if (checked == "false" && flagged == "false") {
 			var img = document.createElement("img");
 			img.src = "images/flag.png";
 			img.width = "20";
+			// img.addEventListener("contextmenu", findParent);
 			e.target.appendChild(img);
 			e.target.setAttribute("flagged", "true");
 		}
