@@ -87,9 +87,9 @@ function checkCell(cell) {
 			var cellPositions = cell.id.split(" ");
 			var cellRow = parseInt(cellPositions[0]);
 			var cellCol = parseInt(cellPositions[1]);
-			for (var i = Math.max(cellRow - 1, 0); i <= Math.min(cellRow + 1, 9); i++) 
+			for (var i = Math.max(cellRow - 1, 0); i <= Math.min(cellRow + 1, 9); i++)
 			{
-				for (var j = Math.max(cellCol - 1, 0); j <= Math.min(cellCol + 1, 9); j++) 
+				for (var j = Math.max(cellCol - 1, 0); j <= Math.min(cellCol + 1, 9); j++)
 				{
 					if (i < data.board.rows && j < data.board.cols)
 					{
@@ -98,15 +98,15 @@ function checkCell(cell) {
 				}
 			}
 			cell.innerHTML = mineCount;
-			if (mineCount == 0) 
-			{ 
-				for (var i = Math.max(cellRow - 1, 0); i <= Math.min(cellRow + 1, 9); i++) 
+			if (mineCount == 0)
+			{
+				for (var i = Math.max(cellRow - 1, 0); i <= Math.min(cellRow + 1, 9); i++)
 				{
-					for(var j = Math.max(cellCol - 1, 0); j <= Math.min(cellCol + 1, 9); j++) 
+					for(var j = Math.max(cellCol - 1, 0); j <= Math.min(cellCol + 1, 9); j++)
 					{
 						if (i < data.board.rows && j < data.board.cols)
 						{
-		  					if (grid.rows[i].cells[j].innerHTML == "") 
+		  					if (grid.rows[i].cells[j].innerHTML == "")
 		  					{
 		  						cell.innerHTML = " ";
 		  						checkCell(grid.rows[i].cells[j]);
@@ -173,15 +173,7 @@ function revealMines() {
       for(var j=0; j<data.board.cols; j++) {
         var cell = grid.rows[i].cells[j];
         if (cell.getAttribute("mine")=="true") {
-<<<<<<< HEAD
-					if (cell.getAttribute("flagged") == "true") {
-						var child = cell.childNodes;
-						cell.removeChild(child[0]);
-					}
-          var pos = i + "" + j;
-=======
           var pos = i + " " + j;
->>>>>>> ef0411dd0fa344e310e1b88da3e1c0dc1d2a2b38
           var img = document.createElement("img");
           img.src = "images/bomb.png";
           img.width = "16";
