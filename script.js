@@ -42,7 +42,7 @@ function generateGrid(data) {
 						cell = row.insertCell(j);
 
 						// Create attributes for the cell
-						var string = i + "" + j;	// This is the id
+						var string = i + " " + j;	// This is the id
 						cell.setAttribute("id", string);
 						var cla = document.createAttribute("class");
 						cla.value = "";
@@ -63,26 +63,70 @@ function generateGrid(data) {
 								}
 						}
 						cell.setAttributeNode(mine);
-						cell.addEventListener("click", checkCell);
+						cell.onclick = function() { checkCell(this); }
+						//cell.addEventListener("click", checkCell);
 						cell.addEventListener("contextmenu", flagCell);
 				}
 		}
 }
 
-function checkCell(e) {
+function checkCell(cell) {
 	if (gameOver == false) {
-		var mine = e.target.getAttribute("mine");
-		var flagged = e.target.getAttribute("flagged");
+		console.log(cell)
+		var mine = cell.getAttribute("mine");
+		var flagged = cell.getAttribute("flagged");
 		if (mine == "true" && flagged == "false") {
 			revealMines();
-			console.log("BOMB");
+			alert("Game Over");
 			gameOver = true;
 		}
-
 		else if (mine == "false" && flagged == "false") {
-			console.log("NOT BOMB");
-			e.target.setAttribute("class", "td-clicked");
-			e.target.setAttribute("checked", "true");
+			cell.setAttribute("class", "td-clicked");
+			cell.setAttribute("checked", "true");
+			var mineCount = 0;
+			var cellPositions = cell.id.split(" ");
+			var cellRow = parseInt(cellPositions[0]);
+			var cellCol = parseInt(cellPositions[1]);
+			for (var i = Math.max(cellRow - 1, 0); i <= Math.min(cellRow + 1, 9); i++) 
+			{
+				for (var j = Math.max(cellCol - 1, 0); j <= Math.min(cellCol + 1, 9); j++) 
+				{
+					if (i < data.board.rows && j < data.board.cols)
+					{
+						if (grid.rows[i].cells[j].getAttribute("mine") == "true") mineCount++;
+					}
+				}
+			}
+			cell.innerHTML = mineCount;
+			if (mineCount == 0) 
+			{ 
+				for (var i = Math.max(cellRow - 1, 0); i <= Math.min(cellRow + 1, 9); i++) 
+				{
+					for(var j = Math.max(cellCol - 1, 0); j <= Math.min(cellCol + 1, 9); j++) 
+					{
+						if (i < data.board.rows && j < data.board.cols)
+						{
+		  					if (grid.rows[i].cells[j].innerHTML == "") 
+		  					{
+		  						cell.innerHTML = " ";
+		  						checkCell(grid.rows[i].cells[j]);
+		  					}
+		  				}
+					}
+				}
+			}
+			else if (mineCount == 1)
+			{
+				cell.style.color = "blue"
+			}
+			else if (mineCount == 2)
+			{
+				cell.style.color = "green"
+			}
+			else if (mineCount > 2)
+			{
+				cell.style.color = "red"
+			}
 		}
 	}
 }
@@ -115,7 +159,7 @@ function revealMines() {
       for(var j=0; j<data.board.cols; j++) {
         var cell = grid.rows[i].cells[j];
         if (cell.getAttribute("mine")=="true") {
-          var pos = i + "" + j;
+          var pos = i + " " + j;
           var img = document.createElement("img");
           img.src = "images/bomb.png";
           img.width = "18";
