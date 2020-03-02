@@ -9,11 +9,11 @@ td{
 	box-sizing: border-box;
 }
 
-td-clicked {
+.td-clicked {
 	padding: 0;
 	width: 30px;
 	height: 30px;
 	border: 2px solid black;
 	box-sizing: border-box;
-	background-color: grey;
+	background-color: lightgrey;
 }
