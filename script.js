@@ -107,7 +107,7 @@ function checkCell(cell) {
 					{
 						if (i < data.board.rows && j < data.board.cols)
 						{
-		  					if (grid.rows[i].cells[j].innerHTML == "") 
+		  					if (grid.rows[i].cells[j].innerHTML == "")
 		  					{
 		  						checkCell(grid.rows[i].cells[j]);
 		  					}
