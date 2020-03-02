@@ -5,6 +5,7 @@ var gameOver = false;
 
 function fetchData() {
 		//Prepare the parameter value for 'myParam'
+		gameOver = false;
 		var row = parseInt(document.getElementById("rows").value);
 		var column = parseInt(document.getElementById("columns").value);
 		var mine = parseInt(document.getElementById("bombs").value);
