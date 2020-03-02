@@ -100,6 +100,7 @@ function checkCell(cell) {
 			cell.innerHTML = mineCount;
 			if (mineCount == 0)
 			{
+				cell.innerHTML = " ";
 				for (var i = Math.max(cellRow - 1, 0); i <= Math.min(cellRow + 1, 9); i++)
 				{
 					for(var j = Math.max(cellCol - 1, 0); j <= Math.min(cellCol + 1, 9); j++)
@@ -108,7 +109,6 @@ function checkCell(cell) {
 						{
 		  					if (grid.rows[i].cells[j].innerHTML == "")
 		  					{
-		  						cell.innerHTML = " ";
 		  						checkCell(grid.rows[i].cells[j]);
 		  					}
 		  				}
