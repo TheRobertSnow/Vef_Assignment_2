@@ -134,13 +134,21 @@ function checkCell(cell) {
 function flagCell(e) {
 	e.preventDefault();
 	if (gameOver == false) {
+
 		var checked = e.target.getAttribute("checked");
 		var flagged = e.target.getAttribute("flagged");
+
+		if (e.target == parent) {
+			console.log(parent);
+		}
 
 		if (checked == "false" && flagged == "false") {
 			var img = document.createElement("img");
 			img.src = "images/flag.png";
-			img.width = "18";
+			img.width = "16";
+			var isImg = document.createAttribute("is-img");
+			isImg.value = "true";
+			img.setAttributeNode(isImg);
 			e.target.appendChild(img);
 			e.target.setAttribute("flagged", "true");
 		}
@@ -149,6 +157,12 @@ function flagCell(e) {
 			var c = e.target.childNodes;
 			e.target.removeChild(c[0]);
 			e.target.setAttribute("flagged", "false");
+		}
+		else if (e.target.getAttribute("is-img") == "true") {
+			var parent = e.target.parentElement;
+			var child = parent.childNodes;
+			parent.removeChild(child[0]);
+			parent.setAttribute("flagged", "false");
 		}
 	}
 }
@@ -162,7 +176,7 @@ function revealMines() {
           var pos = i + " " + j;
           var img = document.createElement("img");
           img.src = "images/bomb.png";
-          img.width = "18";
+          img.width = "16";
           document.getElementById(pos).appendChild(img);
           document.getElementById(pos).style.backgroundColor = "red";
         }
