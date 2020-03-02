@@ -173,6 +173,10 @@ function revealMines() {
       for(var j=0; j<data.board.cols; j++) {
         var cell = grid.rows[i].cells[j];
         if (cell.getAttribute("mine")=="true") {
+					if (cell.getAttribute("flagged") == "true") {
+						var child = cell.childNodes;
+						cell.removeChild(child[0]);
+					}
           var pos = i + " " + j;
           var img = document.createElement("img");
           img.src = "images/bomb.png";
