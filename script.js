@@ -1,4 +1,4 @@
-var game = new Game();
+
 
 // function showMines() {
 //     var img = document.createElement("img");
@@ -70,7 +70,7 @@ class Game {
     this.cellList = [];
   }
 
-  function fetchData() {
+  fetchData() {
       //Prepare the parameter value for 'myParam'
       var row = parseInt(document.getElementById("rows").value);
       var column = parseInt(document.getElementById("columns").value);
@@ -96,11 +96,11 @@ class Game {
           });
   }
 
-  function generateGrid() {
+  generateGrid() {
       this.grid.innerHTML="";
-      for (var i=0; i<data.board.rows; i++) {
+      for (var i=0; i<this.data.board.rows; i++) {
           row = this.grid.insertRow(i);
-          for (var j=0; j<data.board.cols; j++) {
+          for (var j=0; j<this.data.board.cols; j++) {
               cell = row.insertCell(j);
               var string = i + "" + j;
               cell.setAttribute("id", string);
@@ -125,11 +125,11 @@ class Game {
       }
   }
 
-  function checkTile() {
+  checkTile() {
 
   }
 
-  function flagTile() {
+  flagTile() {
 
   }
 }
@@ -143,3 +143,5 @@ class Cell {
     this.cell = cell;
   }
 }
+
+var game = new Game();
