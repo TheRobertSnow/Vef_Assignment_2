@@ -1,6 +1,5 @@
 var cellList = [];
-var data = {};
-//var data = {board: {_id: "default", dateGenerated: "2020-03-02T20:00:00.000Z", rows: 10, cols: 10, mines: 10, minePositions: [[1, 3], [3, 0], [4, 2], [4, 5], [4, 7], [6, 9], [7, 7], [8, 9], [9, 3], [9, 9]]}};
+var data = {board: {_id: "default", dateGenerated: "2020-03-02T20:00:00.000Z", rows: 10, cols: 10, mines: 10, minePositions: [[1, 3], [3, 0], [4, 2], [4, 5], [4, 7], [6, 9], [7, 7], [8, 9], [9, 3], [9, 9]]}};
 var gameOver = false;
 
 function fetchData() {
@@ -24,12 +23,12 @@ function fetchData() {
 				.catch(function (error) {
 					//When unsuccessful, print the error.
 					console.log(error);
-					//generateGrid(data);
+					generateGrid(data);
 				});
 		}
-		//else{
-			//generateGrid(data)
-		//}
+		else{
+			generateGrid(data)
+		}
 
 }
 
@@ -64,10 +63,27 @@ function generateGrid(data) {
 						}
 						cell.setAttributeNode(mine);
 						cell.onclick = function() { checkCell(this); }
-						//cell.addEventListener("click", checkCell);
 						cell.addEventListener("contextmenu", flagCell);
 				}
 		}
+}
+
+function checkWinner() {
+	var flagCounter = 0;
+	for (var i = 0; i <= data.board.minePositions.length - 1; i++) {
+		pos = data.board.minePositions[i][0] + " " + data.board.minePositions[i][1]
+		var flagged = document.getElementById(pos).getAttribute("flagged");
+		if (flagged == "true") {
+			flagCounter ++;
+		}
+	}
+	for (var i = 0; i <= data.board.rows - 1; i++) {
+		for (var j = 0; j <= data.board.cols - 1; j++) {
+			console.log(grid.rows[i].cells[j].getAttribute("class"))
+			console.log(grid.rows[i].cells[j].getAttribute("flagged"))
+		}
+	}
+	
 }
 
 function checkCell(cell) {
@@ -128,6 +144,7 @@ function checkCell(cell) {
 				cell.style.color = "red"
 			}
 		}
+		checkWinner()
 	}
 }
 
@@ -164,6 +181,7 @@ function flagCell(e) {
 			parent.removeChild(child[0]);
 			parent.setAttribute("flagged", "false");
 		}
+		checkWinner()
 	}
 }
 
