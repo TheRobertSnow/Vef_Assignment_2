@@ -1,5 +1,6 @@
 var cellList = [];
 var data = {};
+var gameOver = false;
 
 function fetchData() {
 		//Prepare the parameter value for 'myParam'
@@ -61,35 +62,42 @@ function generateGrid(data) {
 }
 
 function checkCell(e) {
-	if (e.target.getAttribute("mine") == "true") {
-		revealMines();
-		console.log("BOMB")
-	}
+	if (gameOver == false) {
+		var mine = e.target.getAttribute("mine");
+		var flagged = e.target.getAttribute("flagged");
+		if (mine == "true" && flagged == "false") {
+			revealMines();
+			console.log("BOMB");
+			gameOver = true;
+		}
 
-	else if (e.target.getAttribute("mine") == "false") {
-		console.log("NOT BOMB");
-		e.target.setAttribute("class", "td-clicked");
-		e.target.setAttribute("checked", "true");
+		else if (mine == "false" && flagged == "false") {
+			console.log("NOT BOMB");
+			e.target.setAttribute("class", "td-clicked");
+			e.target.setAttribute("checked", "true");
+		}
 	}
 }
 
 function flagCell(e) {
 	e.preventDefault();
-	var checked = e.target.getAttribute("checked");
-	var flagged = e.target.getAttribute("flagged");
+	if (gameOver == false) {
+		var checked = e.target.getAttribute("checked");
+		var flagged = e.target.getAttribute("flagged");
 
-	if (checked == "false" && flagged == "false") {
-		var img = document.createElement("img");
-		img.src = "images/flag.png";
-		img.width = "20";
-		e.target.appendChild(img);
-		e.target.setAttribute("flagged", "true");
-	}
+		if (checked == "false" && flagged == "false") {
+			var img = document.createElement("img");
+			img.src = "images/flag.png";
+			img.width = "20";
+			e.target.appendChild(img);
+			e.target.setAttribute("flagged", "true");
+		}
 
-	else if (flagged == "true") {
-		var c = e.target.childNodes;
-		e.target.removeChild(c[0]);
-		e.target.setAttribute("flagged", "false");
+		else if (flagged == "true") {
+			var c = e.target.childNodes;
+			e.target.removeChild(c[0]);
+			e.target.setAttribute("flagged", "false");
+		}
 	}
 }
 
