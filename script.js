@@ -126,6 +126,7 @@ function revealMines() {
           img.src = "images/bomb.png";
           img.width = "18";
           document.getElementById(pos).appendChild(img);
+          document.getElementById(pos).style.backgroundColor = "red";
         }
       }
     }
