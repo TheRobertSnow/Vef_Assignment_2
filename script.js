@@ -92,8 +92,6 @@ function flagCell(e) {
 
 		var checked = e.target.getAttribute("checked");
 		var flagged = e.target.getAttribute("flagged");
-		var parent = e.target.parentElement;
-		console.log(e.target);
 
 		if (e.target == parent) {
 			console.log(parent);
@@ -102,7 +100,10 @@ function flagCell(e) {
 		if (checked == "false" && flagged == "false") {
 			var img = document.createElement("img");
 			img.src = "images/flag.png";
-			img.width = "18";
+			img.width = "16";
+			var isImg = document.createAttribute("is-img");
+			isImg.value = "true";
+			img.setAttributeNode(isImg);
 			e.target.appendChild(img);
 			e.target.setAttribute("flagged", "true");
 		}
@@ -111,6 +112,12 @@ function flagCell(e) {
 			var c = e.target.childNodes;
 			e.target.removeChild(c[0]);
 			e.target.setAttribute("flagged", "false");
+		}
+		else if (e.target.getAttribute("is-img") == "true") {
+			var parent = e.target.parentElement;
+			var child = parent.childNodes;
+			parent.removeChild(child[0]);
+			parent.setAttribute("flagged", "false");
 		}
 	}
 }
