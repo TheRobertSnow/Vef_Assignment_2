@@ -93,8 +93,12 @@ function checkCell(cell) {
 		var flagged = cell.getAttribute("flagged");
 		if (mine == "true" && flagged == "false") {
 			revealMines();
-			alert("Game Over");
+			
 			gameOver = true;
+			if (gameOver == true){
+				var msg = document.getElementById("msg");
+				msg.innerHTML = "Game Over!";
+			}
 		}
 		else if (mine == "false" && flagged == "false") {
 			cell.setAttribute("class", "td-clicked");
