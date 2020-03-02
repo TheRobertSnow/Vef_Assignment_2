@@ -1,6 +1,6 @@
 var cellList = [];
-//var data = {};
-var data = {board: {_id: "default", dateGenerated: "2020-03-02T20:00:00.000Z", rows: 10, cols: 10, mines: 10, minePositions: [[1, 3], [3, 0], [4, 2], [4, 5], [4, 7], [6, 9], [7, 7], [8, 9], [9, 3], [9, 9]]}};
+var data = {};
+//var data = {board: {_id: "default", dateGenerated: "2020-03-02T20:00:00.000Z", rows: 10, cols: 10, mines: 10, minePositions: [[1, 3], [3, 0], [4, 2], [4, 5], [4, 7], [6, 9], [7, 7], [8, 9], [9, 3], [9, 9]]}};
 var gameOver = false;
 
 function fetchData() {
@@ -24,12 +24,12 @@ function fetchData() {
 				.catch(function (error) {
 					//When unsuccessful, print the error.
 					console.log(error);
-					generateGrid(data);
+					//generateGrid(data);
 				});
 		}
-		else{
-			generateGrid(data)
-		}
+		//else{
+			//generateGrid(data)
+		//}
 
 }
 
@@ -87,9 +87,9 @@ function checkCell(cell) {
 			var cellPositions = cell.id.split(" ");
 			var cellRow = parseInt(cellPositions[0]);
 			var cellCol = parseInt(cellPositions[1]);
-			for (var i = cellRow - 1; i <= cellRow + 1; i++) 
+			for (var i = Math.max(cellRow - 1, 0); i <= Math.min(cellRow + 1, data.board.rows-1); i++)
 			{
-				for (var j = cellCol - 1; j <= cellCol + 1; j++) 
+				for (var j = Math.max(cellCol - 1, 0); j <= Math.min(cellCol + 1, data.board.cols-1); j++)
 				{
 					if (i < data.board.rows && j < data.board.cols)
 					{
@@ -98,12 +98,12 @@ function checkCell(cell) {
 				}
 			}
 			cell.innerHTML = mineCount;
-			if (mineCount == 0) 
-			{ 
-				cell.innerHTML = "";
-				for (var i = cellRow - 1; i <= cellRow + 1; i++) 
+			if (mineCount == 0)
+			{
+				cell.innerHTML = " ";
+				for (var i = Math.max(cellRow - 1, 0); i <= Math.min(cellRow + 1, data.board.rows-1); i++)
 				{
-					for(var j = cellCol - 1; j <= cellCol + 1; j++) 
+					for(var j = Math.max(cellCol - 1, 0); j <= Math.min(cellCol + 1, data.board.cols-1); j++)
 					{
 						if (i < data.board.rows && j < data.board.cols)
 						{
