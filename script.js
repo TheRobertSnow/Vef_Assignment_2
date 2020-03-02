@@ -132,7 +132,7 @@ function revealMines() {
           var pos = i + "" + j;
           var img = document.createElement("img");
           img.src = "images/bomb.png";
-          img.width = "18";
+          img.width = "16";
           document.getElementById(pos).appendChild(img);
           document.getElementById(pos).style.backgroundColor = "red";
         }
