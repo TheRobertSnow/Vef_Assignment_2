@@ -1,5 +1,6 @@
 var cellList = [];
-var data = {};
+//var data = {};
+var data = {board: {_id: "default", dateGenerated: "2020-03-02T20:00:00.000Z", rows: 10, cols: 10, mines: 10, minePositions: [[1, 3], [3, 0], [4, 2], [4, 5], [4, 7], [6, 9], [7, 7], [8, 9], [9, 3], [9, 9]]}};
 var gameOver = false;
 
 function fetchData() {
@@ -7,22 +8,28 @@ function fetchData() {
 		var row = parseInt(document.getElementById("rows").value);
 		var column = parseInt(document.getElementById("columns").value);
 		var mine = parseInt(document.getElementById("bombs").value);
-
+		var maxMines = row * column
 		//The URL to which we will send the request
 		var url = 'https://veff213-minesweeper.herokuapp.com/api/v1/minesweeper';
-
-		//Perform an AJAX POST request to the url, and set the param 'myParam' in the request body to paramValue
-		axios.post(url, {rows: row, cols: column, mines: mine} )
+		if (row >= 1 && column >= 1 && mine >= 1 && row <= 40 && column <= 40 && mine <= maxMines){
+			//Perform an AJAX POST request to the url, and set the param 'myParam' in the request body to paramValue
+			axios.post(url, {rows: row, cols: column, mines: mine} )
 				.then(function (response) {
-						//When successful, print 'Success: ' and the received data
-						data = response.data;
-						console.log("Success: ", data);
-						generateGrid(data)
+					//When successful, print 'Success: ' and the received data
+					data = response.data;
+					console.log("Success: ", data);
+					generateGrid(data);
 				})
 				.catch(function (error) {
-						//When unsuccessful, print the error.
-						console.log(error);
+					//When unsuccessful, print the error.
+					console.log(error);
+					generateGrid(data);
 				});
+		}
+		else{
+			generateGrid(data)
+		}
+
 }
 
 function generateGrid(data) {
@@ -95,8 +102,7 @@ function flagCell(e) {
 		if (checked == "false" && flagged == "false") {
 			var img = document.createElement("img");
 			img.src = "images/flag.png";
-			img.width = "20";
-			// img.addEventListener("contextmenu", findParent);
+			img.width = "18";
 			e.target.appendChild(img);
 			e.target.setAttribute("flagged", "true");
 		}
@@ -118,7 +124,7 @@ function revealMines() {
           var pos = i + "" + j;
           var img = document.createElement("img");
           img.src = "images/bomb.png";
-          img.width = "20";
+          img.width = "18";
           document.getElementById(pos).appendChild(img);
         }
       }
