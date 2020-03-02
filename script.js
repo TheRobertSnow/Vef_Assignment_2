@@ -87,9 +87,9 @@ function checkCell(cell) {
 			var cellPositions = cell.id.split(" ");
 			var cellRow = parseInt(cellPositions[0]);
 			var cellCol = parseInt(cellPositions[1]);
-			for (var i = Math.max(cellRow - 1, 0); i <= Math.min(cellRow + 1, 9); i++) 
+			for (var i = cellRow - 1; i <= cellRow + 1; i++) 
 			{
-				for (var j = Math.max(cellCol - 1, 0); j <= Math.min(cellCol + 1, 9); j++) 
+				for (var j = cellCol - 1; j <= cellCol + 1; j++) 
 				{
 					if (i < data.board.rows && j < data.board.cols)
 					{
@@ -100,15 +100,15 @@ function checkCell(cell) {
 			cell.innerHTML = mineCount;
 			if (mineCount == 0) 
 			{ 
-				for (var i = Math.max(cellRow - 1, 0); i <= Math.min(cellRow + 1, 9); i++) 
+				cell.innerHTML = "";
+				for (var i = cellRow - 1; i <= cellRow + 1; i++) 
 				{
-					for(var j = Math.max(cellCol - 1, 0); j <= Math.min(cellCol + 1, 9); j++) 
+					for(var j = cellCol - 1; j <= cellCol + 1; j++) 
 					{
 						if (i < data.board.rows && j < data.board.cols)
 						{
 		  					if (grid.rows[i].cells[j].innerHTML == "") 
 		  					{
-		  						cell.innerHTML = " ";
 		  						checkCell(grid.rows[i].cells[j]);
 		  					}
 		  				}
@@ -173,12 +173,16 @@ function revealMines() {
       for(var j=0; j<data.board.cols; j++) {
         var cell = grid.rows[i].cells[j];
         if (cell.getAttribute("mine")=="true") {
-          var pos = i + " " + j;
-          var img = document.createElement("img");
-          img.src = "images/bomb.png";
-          img.width = "16";
-          document.getElementById(pos).appendChild(img);
-          document.getElementById(pos).style.backgroundColor = "red";
+			if (cell.getAttribute("flagged") == "true") {
+				var child = cell.childNodes;
+				cell.removeChild(child[0]);
+			}
+          	var pos = i + " " + j;
+          	var img = document.createElement("img");
+          	img.src = "images/bomb.png";
+          	img.width = "16";
+          	document.getElementById(pos).appendChild(img);
+          	document.getElementById(pos).style.backgroundColor = "red";
         }
       }
     }
